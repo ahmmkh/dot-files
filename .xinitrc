@@ -47,7 +47,7 @@ if [ -d /etc/X11/xinit/xinitrc.d ] ; then
  done
  unset f
 fi
-xrandr --auto --mode 1920x1080 --rate 55 &
+xrandr --auto --mode 1920x1080 & 
 picom --experimental-backends --backend glx --xrender-sync-fence &
 nitrogen --restore &
 exec dwm
