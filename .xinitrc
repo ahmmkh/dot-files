@@ -50,4 +50,5 @@ fi
 xrandr --auto --mode 1920x1080 & 
 picom --experimental-backends --backend glx --xrender-sync-fence &
 nitrogen --restore &
+dwmblocks &
 exec dwm
