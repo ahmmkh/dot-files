@@ -1,6 +1,8 @@
+" cSpell:disable
 set number relativenumber
 set termguicolors
 set nu rnu
+let g:python3_host_prog='/usr/bin/python3'
 call plug#begin('~/.config/nvim/plugged')
 Plug 'dracula/vim', { 'as': 'dracula' } 
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
@@ -11,9 +13,13 @@ Plug 'vim-airline/vim-airline'
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 Plug 'rrethy/vim-hexokinase', { 'do': 'make hexokinase' }
 Plug 'mhinz/vim-startify'
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
+Plug 'vim-airline/vim-airline-themes'
+Plug 'tpope/vim-fugitive'
 call plug#end()
 " keymaps 
-
+" Do default action for previous item.
 no <down> <Nop>
 no <left> <Nop>
 no <right> <Nop>
@@ -30,16 +36,27 @@ vno <right> <Nop>
 vno <down> <Nop>
 vno <up> <Nop>
 
-
+inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
+				\: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+inoremap <expr> <C-k> pumvisible() ? "\<C-p>" : "\<C-k>"
+inoremap <expr> <C-j> pumvisible() ? "\<C-n>" : "\<C-j>"
+no <tab> :bnext<CR>
 nnoremap ; :
 cnoremap q1 q!
 imap kj <Esc>
 imap jk <Esc>
 nmap j gj
 nmap k gk
-verbose imap <tab>
 " tab mapping for completion 
-
+" enable tabline
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#left_sep = ''
+let g:airline#extensions#tabline#left_alt_sep = ''
+let g:airline#extensions#tabline#right_sep = ''
+let g:airline#extensions#tabline#right_alt_sep = ''
+set showtabline=2
+vmap <leader>a <Plug>(coc-codeaction-selected)
+nmap <leader>a <Plug>(coc-codeaction-selected)
 " color scheme
 colorscheme gruvbox
 nnoremap <C-n> :NERDTreeToggle<CR>
@@ -64,3 +81,5 @@ let g:Hexokinase_ftOptInPatterns = {
 \     'css': 'full_hex,rgb,rgba,hsl,hsla,colour_names',
 \     'html': 'full_hex,rgb,rgba,hsl,hsla,colour_names'
 \ }
+
+set noshowmode
