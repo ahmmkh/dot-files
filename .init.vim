@@ -1,8 +1,14 @@
 " cSpell:disable
+set ts=4 sts=4 sw=4 noexpandtab
+set showbreak=↪\ 
+set listchars=tab:→\ ,eol:↲,nbsp:␣,trail:•,extends:⟩,precedes:⟨
+set list
 set number relativenumber
 set termguicolors
 set nu rnu
+let g:airline_theme = 'minimalist'
 let g:python3_host_prog='/usr/bin/python3'
+" init.vim
 call plug#begin('~/.config/nvim/plugged')
 Plug 'dracula/vim', { 'as': 'dracula' } 
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
@@ -16,7 +22,11 @@ Plug 'mhinz/vim-startify'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 Plug 'vim-airline/vim-airline-themes'
+Plug 'kdheepak/lazygit.nvim'
 Plug 'tpope/vim-fugitive'
+Plug 'kristijanhusak/orgmode.nvim'
+Plug 'tpope/vim-surround'
+Plug 'github/copilot.vim'
 call plug#end()
 " keymaps 
 " Do default action for previous item.
@@ -35,7 +45,7 @@ vno <left> <Nop>
 vno <right> <Nop>
 vno <down> <Nop>
 vno <up> <Nop>
-
+" Use the same symbols as TextMate for tabstops and EOLs
 inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
 				\: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
 inoremap <expr> <C-k> pumvisible() ? "\<C-p>" : "\<C-k>"
@@ -47,6 +57,7 @@ imap kj <Esc>
 imap jk <Esc>
 nmap j gj
 nmap k gk
+nmap <C-w> :bd<CR>
 " tab mapping for completion 
 " enable tabline
 let g:airline#extensions#tabline#enabled = 1
@@ -75,6 +86,7 @@ let g:Hexokinase_optInPatterns = [
 \     'colour_names'
 \ ]
 
+highlight NonText guifg=#4a4a59
 " Filetype specific patterns to match
 " entry value must be comma seperated list
 let g:Hexokinase_ftOptInPatterns = {
@@ -83,3 +95,10 @@ let g:Hexokinase_ftOptInPatterns = {
 \ }
 
 set noshowmode
+highlight SpecialKey guifg=#4a4a59
+" init.vim
+lua << EOF
+require('orgmode').setup({
+  org_agenda_files = {'~/orgs/*' },
+})
+EOF
